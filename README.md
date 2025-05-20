@@ -3,6 +3,11 @@
 Web application using MapLibre and Express.js to display real-time weather alerts with an interactive map. 
 Below are steps to run the application and deploy with docker
 
+## Features
+Refresh on new alerts  
+Dockerised Deployment  
+Mobile-Friendly Layout  (WIP)
+
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/) (v22.x recommended)
@@ -13,10 +18,10 @@ Below are steps to run the application and deploy with docker
 
 ### Step 1: Clone the project
 
-Open a terminal, and in your desired directory, enter either:
-HTTPS: git clone https://github.com/MatthewFilo/Modern_Weather_Alert.git
-SSH: git@github.com:MatthewFilo/Modern_Weather_Alert.git
-GitHub CLI: gh repo clone MatthewFilo/Modern_Weather_Alert
+Open a terminal, and in your desired directory, enter either:  
+HTTPS: git clone https://github.com/MatthewFilo/Modern_Weather_Alert.git  
+SSH: git@github.com:MatthewFilo/Modern_Weather_Alert.git  
+GitHub CLI: gh repo clone MatthewFilo/Modern_Weather_Alert  
 
 ### Step 2: Node and NPM Versions
 Ensure you have the latest version of Node.JS and NPM installed (Instructions listed below for bash terminals)
@@ -46,8 +51,8 @@ npm install
 This will install all of the required packages necessary for this project
 
 ### Step 4: Running the Project
-Once you are done making changes and would like to run the project:
-    - **Development**: `npm run dev` (will utilize nodemon while running project)
+Once you are done making changes and would like to run the project:  
+    - **Development**: `npm run dev` (will utilize nodemon while running project)  
     - **Production**: `npm run start` (will use node to run project)
 
 Afterwards, you can access the app using **http://localhost:8080**
@@ -75,5 +80,5 @@ docker-compose down
 Voila! That's how to utilize docker within this project
 
 ## License && Open Source Projects
-MIT
+MIT,  
 Maplibre GL JS

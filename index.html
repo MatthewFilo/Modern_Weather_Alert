@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Weather Alert</title>
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css">
+    <link rel="stylesheet" href="/frontend/css/styles.css">
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="frontend/js/legend.js"></script>
+    <div id="legend-dialog" class="legend-dialog">
+        <div class="legend-dialog-content">
+            <span id="close-legend" class="legend-close">&times;</span>
+            <div class="legend-items">
+                <div class="legend-item"><span class="legend-color" style="background:#ff2d00"></span> Tornado Warning</div>
+                <div class="legend-item"><span class="legend-color" style="background:#ff9200"></span> Severe Thunderstorm Warning</div>
+                <div class="legend-item"><span class="legend-color" style="background:#792121"></span> Flash Flood Warning</div>
+                <div class="legend-item"><span class="legend-color" style="background:#00fff8"></span> Severe Weather Statement</div>
+                <div class="legend-item"><span class="legend-color" style="background:#00a5ff"></span> Heavy Freezing Spray Warning</div>
+                <div class="legend-item"><span class="legend-color" style="background:#ff2d00"></span> High Wind Warning</div>
+                <div class="legend-item"><span class="legend-color" style="background:#6e00ba"></span> Storm Warning</div>
+                <div class="legend-item"><span class="legend-color" style="background:#00ff27"></span> Flood Warning</div>
+                <div class="legend-item"><span class="legend-color" style="background:#eeff00"></span> Tornado Watch</div>
+                <div class="legend-item"><span class="legend-color" style="background:#e2599f"></span> Severe Thunderstorm Watch</div>
+                <div class="legend-item"><span class="legend-color" style="background:#ecb0ce"></span> Gale Warning</div>
+                <div class="legend-item"><span class="legend-color" style="background:#32005e"></span> Freeze Warning</div>
+                <div class="legend-item"><span class="legend-color" style="background:#d9006b"></span> Red Flag Warning</div>
+                <div class="legend-item"><span class="legend-color" style="background:#8500e9"></span> Winter Weather Advisory</div>
+                <div class="legend-item"><span class="legend-color" style="background:#21ff8b"></span> Flood Advisory</div>
+                <div class="legend-item"><span class="legend-color" style="background:#f0ccda"></span> Small Craft Advisory</div>
+                <div class="legend-item"><span class="legend-color" style="background:#b399a3"></span> Brisk Wind Advisory</div>
+                <div class="legend-item"><span class="legend-color" style="background:#9b8761"></span> Lake Wind Advisory</div>
+                <div class="legend-item"><span class="legend-color" style="background:#d7bd8a"></span> Wind Advisory</div>
+                <div class="legend-item"><span class="legend-color" style="background:#3c8cd7"></span> Frost Advisory</div>
+                <div class="legend-item"><span class="legend-color" style="background:#ffa2c7"></span> Gale Watch</div>
+                <div class="legend-item"><span class="legend-color" style="background:#0a4d12"></span> Flood Watch</div>
+                <div class="legend-item"><span class="legend-color" style="background:#48fff3"></span> Freeze Watch</div>
+                <div class="legend-item"><span class="legend-color" style="background:#bdad7e"></span> Fire Weather Watch</div>
+                <div class="legend-item"><span class="legend-color" style="background:#ebd9a4"></span> Special Weather Statement</div>
+                <div class="legend-item"><span class="legend-color" style="background:#595857"></span> Air Quality Alert</div>
+                <div class="legend-item"><span class="legend-color" style="background:#3f3f3f"></span> Test Message</div>
+            </div>
+        </div>
+    </div>
+    <button id="legend-btn" class="legend-btn">Alerts Legend</button>
+    
+    <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
+    <script src="frontend/js/map.js"></script>
+    <script> initMap();</script>
+</body>
+</html>

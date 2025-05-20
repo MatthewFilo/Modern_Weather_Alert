@@ -69,14 +69,15 @@ async function getAlerts() {
     };
 }
 
+// Function that draws the map states and counties, does not draw alerts
 function drawMap(map) {
     map.addSource('state-data', {
         type: 'geojson',
-        data: 'frontend/assets/us-states.geojson',
+        data: 'src/frontend/assets/us-states.geojson',
     });
     map.addSource('county-data', {
         type: 'geojson',
-        data: 'frontend/assets/usa-counties.geojson',
+        data: 'src/frontend/assets/usa-counties.geojson',
         generateId: true
     });
 
@@ -208,16 +209,18 @@ async function drawAlertsLayer(map) {
 
 // We need to compare the old and new alerts and see if there's changes, if so, update map
 async function updateAlerts(map) {
-    // we want to make sure we are comparing the same response as in the init draw function
+    // We want to make sure we are comparing the same response as in the init draw function
     // Now we compare the newIDs with the old IDs
     const newIDs = new Set(getAlerts().features.map(feature => feature.id));
     let changed = false;
     // We check the sizes and then we will check to see if the prevID's don't have some of the newID's
+    // Handles removals
     if (prevAlertsID.size !== newIDs.size) {
         changed = true;
     }
     else {
         for (let id of newIDs) {
+            // Otherwise if prevAlerts does not have instance newID, we know it has a change
             if (!prevAlertsID.has(id)) {
                 changed = true;
                 break;
@@ -227,7 +230,7 @@ async function updateAlerts(map) {
     if (changed) { // if data is changed, update the map
         const source = map.getSource('alerts-data');
         if (source) {
-            source.setData(combinedJSON); // This lets us update the map without redrawing the layers
+            source.setData(combinedJSON); // setData lets us update the map without redrawing the layers
         }
         prevAlertsID = newIDs;
     }
@@ -281,7 +284,7 @@ const warningColors = [
     '#ffffff'
 ]
 
-// Call the function every 3 minutes
+// Call the function every 3 minutes to check for new alerts and update maps
 setInterval(() => {
     getAlerts().then(alerts => {
         if (alerts) {

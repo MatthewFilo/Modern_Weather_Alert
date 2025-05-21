@@ -57,6 +57,11 @@ Once you are done making changes and would like to run the project:
 
 Afterwards, you can access the app using **http://localhost:8080**
 
+## Testing
+
+Simply cd into the main project directory and run "npm test". It will run Jest Supertests with the test cases provided in the /test directory.  
+
+
 Voila! You have successfully run the project. Docker is utilized within this project with Docker Compose. Below are the steps to run a container for this application
 ## Docker
 

@@ -1,7 +1,7 @@
 const url = "https://api.weather.gov/alerts/active";
 
 async function fetchAlerts() {
-    try { // Try and catch response for error-handling
+    try {
         const response = await fetch(url);
         if (!response.ok) {
           console.error('Failed to fetch alerts');

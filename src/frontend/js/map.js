@@ -27,9 +27,11 @@ async function getAlerts() {
         console.error('Failed to fetch alerts');
         return null;
     }
+    // Thing I would have liked to do: perform this filter in api.js but I was having issues submitting way too many requests
+    // to the point my IPS would limit my outward
     const alerts = await response.json();
     let allFeatures = alerts.features.filter(f => f.geometry); // Get all alerts with a geometry tag
-    let nullZones = [] // Array to hold the init null geo zones
+    let nullZones = []
     
     // Go through each of the alerts, if geo null but has url for affected zones, fetcch the zones
     alerts.features.forEach(alert => {

@@ -75,11 +75,7 @@ function drawMap(map) {
 
 // Call the function every 3 minutes to check for new alerts and update maps
 setInterval(() => {
-    getAlerts().then(alerts => {
-        if (alerts) {
-            updateAlerts(map);
-        }
-    })
+    updateAlerts(map);
 }, 180000); // 3 minutes in ms
 
 initMap();

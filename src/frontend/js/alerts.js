@@ -140,7 +140,8 @@ async function getAlerts() {
 async function updateAlerts(map) {
     // We want to make sure we are comparing the same response as in the init draw function
     // Now we compare the newIDs with the old IDs
-    const newIDs = new Set(getAlerts().features.map(feature => feature.id));
+    await getAlerts();
+    const newIDs = new Set(combinedJSON.features.map(feature => feature.id));
     let changed = false;
     // We check the sizes and then we will check to see if the prevID's don't have some of the newID's
     // Handles removals

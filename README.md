@@ -6,7 +6,7 @@ Below are steps to run the application and deploy with docker
 ## Features
 Refresh on new alerts  
 Dockerised Deployment  
-Mobile-Friendly Layout  (WIP)
+Mobile-Friendly Layout
 
 ## Prerequisites
 

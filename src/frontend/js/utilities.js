@@ -20,6 +20,7 @@ const warningColors = [
     ['==', ['get', 'event'], 'Severe Thunderstorm Warning'], '#ff9200',
     ['==', ['get', 'event'], 'Flash Flood Warning'], '#792121',
     ['==', ['get', 'event'], 'Coastal Flood Advisory'], '#7db9f1',
+    ['==', ['get', 'event'], 'Coastal Flood Warning'], '#aad5d4',
     ['==', ['get', 'event'], 'Beach Hazards Statement'], '#98afc4',
     ['==', ['get', 'event'], 'Rip Current Statement'], '#27cac5',
     ['==', ['get', 'event'], 'Marine Weather Statement'], '#c7eceb',

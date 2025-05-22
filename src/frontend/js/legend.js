@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
             { color: "#ff9200", label: "Severe Thunderstorm Warning"},
             { color: "#792121", label: "Flash Flood Warning"},
             { color: '#7db9f1', label: "Coastal Flood Advisory"},
+            { color: '#aad5d4', label: "Coastal Flood Warning"},
             { color: '#98afc4', label: 'Beach Hazards Statement'},
             { color: '#27cac5', label: 'Rip Current Statement'},
             { color: "#00fff8", label: "Severe Weather Statement"},

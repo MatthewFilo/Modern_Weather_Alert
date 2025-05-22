@@ -70,11 +70,17 @@ Ensure you have the latest version of docker installed on your machine. The docu
 https://docs.docker.com/engine/install/
 
 ### Step 2: Starting Docker Instance
-Run this command
+FIRST! If any updates are made to front-end Javascript folders, the container might not show the
+newest version, so to be safe, before launching a container, run
+```bash
+docker-compose build --no-cache
+```  
+
+Great! Now to deploy your container, run this command
 ```bash 
 docker-compose up -d 
 ```
-docker-compose up will utilize the compose.yaml file and create an image and run that image!
+docker-compose up will utilize the compose.yaml file, create an image and run that image!
 
 ### Step 3: Stopping docker instance
 To stop the container, simply run
@@ -87,3 +93,5 @@ Voila! That's how to utilize docker within this project
 ## License && Open Source Projects
 MIT,  
 Maplibre GL JS
+USA States GeoJSON: https://github.com/mapbox/mapboxgl-jupyter/blob/master/examples/data/us-states.geojson
+USA County GeoJSON: https://gist.github.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a

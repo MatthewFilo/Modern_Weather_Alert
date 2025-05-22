@@ -124,7 +124,7 @@ async function getAlerts() {
     // This removes any old / duplicate alerts and only shows the most recent one
     const newest_alerts = {};
     for (const feature of combinedAlerts) {
-        const key = feature.properties.event + '|' + (feature.properties.zoneName || '');
+        const key = feature.properties.event + '|' + (feature.properties.zoneName || '') + '|' + feature.id;
         const current = newest_alerts[key];
         if ( ! current || new Date(feature.properties.expires) >= new Date(current.properties.expires)) {
             newest_alerts[key] = feature;

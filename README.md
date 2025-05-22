@@ -70,8 +70,7 @@ Ensure you have the latest version of docker installed on your machine. The docu
 https://docs.docker.com/engine/install/
 
 ### Step 2: Starting Docker Instance
-FIRST! If any updates are made to front-end Javascript folders, the container might not show the
-newest version, so to be safe, before launching a container, run
+FIRST! During your first time running the container / if any updates are made to front-end Javascript folders, the container might not show the newest version, so to be safe, before launching a container, run
 ```bash
 docker-compose build --no-cache
 ```  

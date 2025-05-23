@@ -126,7 +126,9 @@ async function getAlerts() {
     for (const feature of combinedAlerts) {
         const key = feature.properties.event + '|' + (feature.properties.zoneName || '') + '|' + feature.id;
         const current = newest_alerts[key];
-        if ( ! current || new Date(feature.properties.expires) >= new Date(current.properties.expires)) {
+        const feature_expires = new Date(feature.properties.expires);
+        const current_expires = new Date(current?.properties.expires);
+        if ( (! current || feature_expires >= current_expires) && feature_expires >= Date.now()) {
             newest_alerts[key] = feature;
         }
     }

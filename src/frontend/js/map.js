@@ -8,7 +8,7 @@ async function initMap() {
         center: [-100, 39.5],
         zoom: 4.1,
         maxBounds: [
-            [-210, 20],
+            [-210, 15],
             [-50, 72]
         ]
     });

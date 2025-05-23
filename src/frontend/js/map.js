@@ -1,7 +1,11 @@
 import { getAlerts, drawAlertsLayer, updateAlerts } from './alerts.js';
+import { showLoadingOverlay, hideLoadingOverlay } from './loading_overlay.js';
 
 let map;
 async function initMap() {
+    showLoadingOverlay();
+
+
     map = new maplibregl.Map({
         container: 'map',
         style: 'https://demotiles.maplibre.org/style.json',
@@ -13,11 +17,13 @@ async function initMap() {
         ]
     });
 
-    // Draw initial states, counties, and alerts
+    // Draw initial states, counties, and alerts and displays a loading overlay screen
     map.on('load', async () => {
         drawMap(map);
         await getAlerts();
         drawAlertsLayer(map);
+
+        hideLoadingOverlay();
     });
 }
 

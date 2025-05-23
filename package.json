@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node server.js",
+    "start": "node --max-old-space-size=1024 server.js",
     "dev": "nodemon server.js"
   },
   "keywords": [],
@@ -17,6 +17,7 @@
     "ioredis": "^5.6.1",
     "maplibre-gl": "^5.5.0",
     "node-fetch": "^3.3.2",
+    "p-limit": "^6.2.0",
     "redis": "^5.1.0"
   },
   "devDependencies": {

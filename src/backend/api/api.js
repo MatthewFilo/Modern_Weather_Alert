@@ -27,29 +27,35 @@ async function fetchAlerts() {
         let nullZones = []
 
         // If we don't limit concurrent request, not all alerts will show due to rate limits
-        const pLimit = require('p-limit');
-        const limit = pLimit(10);
+        const pLimit = require('p-limit').default;
+        const limit = pLimit(5);
 
         // Go through each of the alerts, if geo null but has url for affected zones, fetcch the zones
         alerts.features.forEach(alert => {
             if (!alert.geometry && alert.properties.affectedZones) {
                 alert.properties.affectedZones.forEach(affectedZoneUrl => {
-                    const zone = limit(() =>
-                        fetch(affectedZoneUrl)
-                            .then(response => response.json())
-                            .then(zoneGeography => {
-                                if (zoneGeography.geometry) {
-                                    return {
-                                        type: 'Feature',
-                                        geometry: zoneGeography.geometry,
-                                        properties: { ...alert.properties, zoneName: zoneGeography.properties?.name }
-                                    };
-                                } else {
-                                    return null;
-                                }
-                            })
-                            .catch(() => null)
-                    );
+                    const zone = limit(async () => {
+                        const zoneCacheKey = `zone:${affectedZoneUrl}`;
+                        let zoneGeo = await redis.get(zoneCacheKey);
+                        if (zoneGeo) {
+                            zoneGeo = JSON.parse(zoneGeo);
+                        } else {
+                            zoneGeo = await fetch(affectedZoneUrl).then(r => r.json()).catch(() => null);
+                            if (zoneGeo && zoneGeo.geometry) {
+                                // Cache for 1 week (Geometries do not change much)
+                                await redis.set(zoneCacheKey, JSON.stringify(zoneGeo), 'EX', 604800);
+                            }
+                        }
+                        if (zoneGeo && zoneGeo.geometry) {
+                            return {
+                                type: 'Feature',
+                                geometry: zoneGeo.geometry,
+                                properties: { ...alert.properties, zoneName: zoneGeo.properties?.name }
+                            };
+                        } else {
+                            return null;
+                        }
+                    });
                     nullZones.push(zone);
                 });
             }
@@ -57,7 +63,7 @@ async function fetchAlerts() {
         // Wait until all null zones are received
         // We need to filter out some null zones since those zones don't have any sort of geometry
         const nullZonesData = (await Promise.all(nullZones)).filter(nullZone => nullZone && nullZone.geometry);
-
+        
         // Merge the alerts with the new null zones
         const combinedAlerts = allFeatures.concat(nullZonesData);
 

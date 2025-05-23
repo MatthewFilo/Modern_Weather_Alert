@@ -2,6 +2,16 @@ import { translateTime, warningColors } from './utilities.js';
 let combinedJSON;
 let prevAlertsID = new Set();
 
+async function getAlerts() {
+    const response = await fetch('/api/alerts');
+    if (!response.ok) {
+        console.error('Failed to fetch alerts');
+        return null;
+    }
+    combinedJSON = await response.json();
+    return combinedJSON;
+}
+
 async function drawAlertsLayer(map) {
     // Before we redraw new alerts, we need to check for and remove old alerts
     if (map.getLayer('active-alerts')) map.removeLayer('active-alerts');
@@ -12,7 +22,6 @@ async function drawAlertsLayer(map) {
         type: 'geojson',
         data: combinedJSON
     });
-
 
     map.addLayer({ // Alerts Line
         id: 'active-alerts',
@@ -53,18 +62,19 @@ async function drawAlertsLayer(map) {
         if (alertFeatures.length) {
 
             // Set the contents for the popup (Warning, Severity, Expires).
-            const popupContent = `<div class=popup-row>
-            ${alertFeatures.map(feature => {
-            const zoneName = feature.properties.zoneName
-            const countyName = countyFeatures[0]?.properties?.NAME || zoneName || "Unknown";
-            return `<div class="popup-card">
-                    <h2> ${feature.properties.event} </h2>
-                    <p> Area: ${countyName} County </p>
-                    <h2> Severity </h2> <p> ${feature.properties.severity} </p>
-                    <h2> Expires </h2> <p> ${translateTime(feature.properties.expires)} </p>
-                    <hr>
-                    </div>`
-            }).join('')}
+            const popupContent = 
+            `<div class=popup-row>
+                ${alertFeatures.map(feature => {
+                const zoneName = feature.properties.zoneName
+                const countyName = countyFeatures[0]?.properties?.NAME || zoneName || "Unknown";
+                return `<div class="popup-card">
+                        <h2> ${feature.properties.event} </h2>
+                        <p> Area: ${countyName} County </p>
+                        <h2> Severity </h2> <p> ${feature.properties.severity} </p>
+                        <h2> Expires </h2> <p> ${translateTime(feature.properties.expires)} </p>
+                        <hr>
+                        </div>`
+                }).join('')}
             </div>`;
 
             new maplibregl.Popup({maxWidth: 'none'})
@@ -73,76 +83,14 @@ async function drawAlertsLayer(map) {
                 .addTo(map);
         }
     });
-
-}
-
-async function getAlerts() {
-    const response = await fetch('/api/alerts');
-    if (!response.ok) {
-        console.error('Failed to fetch alerts');
-        return null;
-    }
-    // Thing I would have liked to do: perform this filter in api.js but I was having issues submitting way too many requests
-    // to the point my IPS would limit my outward requests.
-    const alerts = await response.json();
-    let allFeatures = alerts.features.filter(f => f.geometry); // Get all alerts with a geometry tag
-    let nullZones = []
-    
-    // Go through each of the alerts, if geo null but has url for affected zones, fetcch the zones
-    alerts.features.forEach(alert => {
-        if(!alert.geometry && alert.properties.affectedZones) {
-            alert.properties.affectedZones.forEach(affectedZoneUrl => {
-                const zone = fetch(affectedZoneUrl)
-                .then(response => response.json())
-                .then(zoneGeography => {
-                    if(zoneGeography.geometry) 
-                    {
-                        return {
-                            type: 'Feature',
-                            geometry: zoneGeography.geometry,
-                            properties:{ ...alert.properties, 
-                                         zoneName: zoneGeography.properties?.name // Mainly for the coastal regions since the county JSON doesn't have any data for the coasts
-                            }
-                        };
-                    }
-                    else 
-                    {
-                        return null;
-                    }
-                });
-                nullZones.push(zone);
-            });
-        }
-    });
-    // Wait until all null zones are received
-    // We need to filter out some null zones since those zones don't have any sort of geometry
-    const nullZonesData = (await Promise.all(nullZones)).filter(nullZone => nullZone && nullZone.geometry);
-
-    // Merge the alerts with the new null zones
-    const combinedAlerts = allFeatures.concat(nullZonesData);
-
-    // This removes any old / duplicate alerts and only shows the most recent one
-    const newest_alerts = {};
-    for (const feature of combinedAlerts) {
-        const key = feature.properties.event + '|' + (feature.properties.zoneName || '') + '|' + feature.id;
-        const current = newest_alerts[key];
-        const feature_expires = new Date(feature.properties.expires);
-        const current_expires = new Date(current?.properties.expires);
-        if ( (! current || feature_expires >= current_expires) && feature_expires >= Date.now()) {
-            newest_alerts[key] = feature;
-        }
-    }
-    combinedJSON = {
-        type: 'FeatureCollection',
-        features: Object.values(newest_alerts)
-    };
 }
 
 // We need to compare the old and new alerts and see if there's changes, if so, update map
 async function updateAlerts(map) {
-    // We want to make sure we are comparing the same response as in the init draw function
-    // Now we compare the newIDs with the old IDs
+    // We want to make sure we are comparing the same response as what is currently drawn
     await getAlerts();
+
+    // Now we compare the newIDs with the old IDs
     const newIDs = new Set(combinedJSON.features.map(feature => feature.id));
     let changed = false;
     // We check the sizes and then we will check to see if the prevID's don't have some of the newID's

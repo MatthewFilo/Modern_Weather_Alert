@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // const to display the legend and what color it correlates with
     const legendItems = [
             { color: "#ff2d00", label: "Tornado Warning"},
             { color: "#ff9200", label: "Severe Thunderstorm Warning"},
@@ -34,6 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
             { color: "#595857", label: "Air Quality Alert"},
             { color: "#3f3f3f", label: "Test Message"}
     ]
+
+    // Logic to create the legend button and dialog
     let legendDialog = document.getElementById('legend-dialog');
     if (!legendDialog) {
         legendDialog = document.createElement('div');

@@ -5,6 +5,7 @@ const redisURL = process.env.REDIS_URL
 const redis = new Redis(redisURL);
 
 async function fetchAlerts() {
+    // Check and see for currently cached alerts
     try {
         const cached = await redis.get('alerts_geojson');
         if (cached) {
@@ -15,6 +16,7 @@ async function fetchAlerts() {
         console.error('Redis cache error:', error);
     }
 
+    // Call the API and filter the alerts (AlertZones, features, old alerts etc.)
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -70,19 +72,21 @@ async function fetchAlerts() {
         // This removes any old / duplicate alerts and only shows the most recent one
         const newest_alerts = {};
         for (const feature of combinedAlerts) {
+            // Note: We need feature.id for our unique alerts
             const key = feature.properties.event + '|' + (feature.properties.zoneName || '') + '|' + feature.id;
             const current = newest_alerts[key];
             const feature_expires = new Date(feature.properties.expires);
             const current_expires = new Date(current?.properties.expires);
+            // Filtering for old vs new alerts and also ensuring no expired alerts passed from API are shown
             if ( (! current || feature_expires >= current_expires) && feature_expires >= Date.now()) {
                 newest_alerts[key] = feature;
             }
         }
-        combinedJSON = {
+        combinedJSON = { // This is our final geojson with all of the filtered alerts
             type: 'FeatureCollection',
             features: Object.values(newest_alerts)
         };
-
+        // Set the cache and update every 3 minutes
         try {
             await redis.set('alerts_geojson', JSON.stringify(combinedJSON), 'EX', 180);
         } catch (err) {

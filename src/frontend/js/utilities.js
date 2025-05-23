@@ -1,4 +1,4 @@
-// Function to translate time from ISO-8601 to a human readable format
+// Function to translate time from ISO-8601 (Format that NWS API gives us) to a human readable format
 function translateTime(dateString) {
     const date = new Date(dateString);
     const options = {
@@ -13,7 +13,7 @@ function translateTime(dateString) {
     return date.toLocaleString('en-US', options);
 }
 
-// Const for colors of different alerts to be drawn
+// Const for colors of different alerts to be drawn (Colors also coincide with the legend table)
 const warningColors = [
     'case',
     ['==', ['get', 'event'], 'Tornado Warning'], '#ff2d00',

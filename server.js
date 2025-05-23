@@ -3,6 +3,7 @@ const app = require('./app');
 const port = process.env.SERVER_PORT;
 const { fetchAlerts } = require('./src/backend/api/api.js');
 
+// Pre-warming the alerts cache so user does not have to wait long during first load
 fetchAlerts()
   .then(() => {
     console.log('Alerts Cache is pre-warmed')

@@ -2,6 +2,7 @@ import { translateTime, warningColors } from './utilities.js';
 let combinedJSON;
 let prevAlertsID = new Set();
 
+// Function to get the alerts from our Express API
 async function getAlerts() {
     const response = await fetch('/api/alerts');
     if (!response.ok) {
@@ -12,6 +13,7 @@ async function getAlerts() {
     return combinedJSON;
 }
 
+// Function to initially draw the alerts
 async function drawAlertsLayer(map) {
     // Before we redraw new alerts, we need to check for and remove old alerts
     if (map.getLayer('active-alerts')) map.removeLayer('active-alerts');

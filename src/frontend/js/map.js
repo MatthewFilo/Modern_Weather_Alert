@@ -2,6 +2,8 @@ import { getAlerts, drawAlertsLayer, updateAlerts } from './alerts.js';
 import { showLoadingOverlay, hideLoadingOverlay } from './loading_overlay.js';
 
 let map;
+
+// Function that initially draws the map and then draws the state/county lines and then the initial alerts
 async function initMap() {
     showLoadingOverlay();
 

@@ -4,7 +4,7 @@ const { fetchAlerts } = require('./src/backend/api/api.js')
 
 app.use('/src/frontend', express.static('src/frontend'));
 
-// Getting the alerts from the API and sending to frontend
+// Getting the alerts from the express API and sending to frontend
 app.get('/api/alerts', async (req, res) => {
     try {
         const combinedJSON = await fetchAlerts();

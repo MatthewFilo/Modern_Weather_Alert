@@ -1,4 +1,5 @@
 function showLoadingOverlay() {
+    // Creating a loading overlay to display while the project is loading
     let overlay = document.getElementById('loading-overlay');
     if (!overlay) {
         overlay = document.createElement('div');
@@ -24,6 +25,7 @@ function showLoadingOverlay() {
         overlay.style.display = 'flex';
     }
 }
+// Hide the overlay once the projct is loaded
 function hideLoadingOverlay() {
     const overlay = document.getElementById('loading-overlay');
     if (overlay) overlay.style.display = 'none';

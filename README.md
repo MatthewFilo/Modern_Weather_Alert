@@ -13,6 +13,7 @@ Mobile-Friendly Layout
 - [Node.js](https://nodejs.org/) (v22.x recommended)
 - [npm](https://www.npmjs.com/)
 - [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/)
+- [Redis](https://redis.io/docs/latest/operate/oss_and_stack/install/archive/install-redis/)
 
 ## Node.JS / NPM
 
@@ -51,7 +52,11 @@ npm install
 This will install all of the required packages necessary for this project
 
 ### Step 4: Running the Project
-Once you are done making changes and would like to run the project:  
+Once you are done making changes and would like to run the project:
+First, Start Redis (Refer to documentation but these instructions will be for MacOS)  
+    - Ensure You have Homebrew and Redis Installed and run: `brew services start redis`
+    - To stop, simply enter `brew services stop redis`
+Then:  
     - **Development**: `npm run dev` (will utilize nodemon while running project)  
     - **Production**: `npm run start` (will use node to run project)
 

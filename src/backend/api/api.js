@@ -6,15 +6,15 @@ const redis = new Redis(redisURL);
 
 async function fetchAlerts() {
     // Check and see for currently cached alerts
-    try {
-        const cached = await redis.get('alerts_geojson');
-        if (cached) {
-            return JSON.parse(cached);
-        }
-    } 
-    catch ( error ) {
-        console.error('Redis cache error:', error);
-    }
+    // try {
+    //     const cached = await redis.get('alerts_geojson');
+    //     if (cached) {
+    //         return JSON.parse(cached);
+    //     }
+    // } 
+    // catch ( error ) {
+    //     console.error('Redis cache error:', error);
+    // }
 
     // Call the API and filter the alerts (AlertZones, features, old alerts etc.)
     try {
@@ -72,8 +72,14 @@ async function fetchAlerts() {
         // This removes any old / duplicate alerts and only shows the most recent one
         const newest_alerts = {};
         for (const feature of combinedAlerts) {
-            // Note: We need feature.id for our unique alerts
-            const key = feature.properties.event + '|' + (feature.properties.zoneName || '') + '|' + feature.id;
+            // We have to create a unique key for each alert including multiple properties, what I had before was causing some zones to now be displayed
+            const key = [
+                feature.properties.event,
+                feature.properties.zoneName || '',
+                feature.properties.severity || '',
+                feature.properties.effective || '',
+                feature.id || ''
+            ].join('|');
             const current = newest_alerts[key];
             const feature_expires = new Date(feature.properties.expires);
             const current_expires = new Date(current?.properties.expires);
@@ -88,7 +94,7 @@ async function fetchAlerts() {
         };
         // Set the cache and update every 3 minutes
         try {
-            await redis.set('alerts_geojson', JSON.stringify(combinedJSON), 'EX', 180);
+            await redis.set('alerts_geojson', JSON.stringify(combinedJSON), 'EX', 5);
         } catch (err) {
             console.error('Redis set error:', err);
         }

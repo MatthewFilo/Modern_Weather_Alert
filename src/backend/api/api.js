@@ -94,7 +94,7 @@ async function fetchAlerts() {
         };
         // Set the cache and update every 3 minutes
         try {
-            await redis.set('alerts_geojson', JSON.stringify(combinedJSON), 'EX', 5);
+            await redis.set('alerts_geojson', JSON.stringify(combinedJSON), 'EX', 180);
         } catch (err) {
             console.error('Redis set error:', err);
         }

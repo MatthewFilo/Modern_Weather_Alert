@@ -68,7 +68,7 @@ async function drawAlertsLayer(map) {
             `<div class=popup-row>
                 ${alertFeatures.map(feature => {
                 const zoneName = feature.properties.zoneName
-                const countyName = countyFeatures[0]?.properties?.NAME || zoneName || "Unknown";
+                const countyName = countyFeatures[0]?.properties?.NAME || zoneName || feature.properties.areaDesc || "Unknown";
                 return `<div class="popup-card">
                         <h2> ${feature.properties.event} </h2>
                         <p> Area: ${countyName} County </p>

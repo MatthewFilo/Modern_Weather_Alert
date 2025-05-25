@@ -48,6 +48,7 @@ const warningColors = [
     ['==', ['get', 'event'], 'Fire Weather Watch'], '#bdad7e',
     ['==', ['get', 'event'], 'Special Weather Statement'], '#ebd9a4',
     ['==', ['get', 'event'], 'Air Quality Alert'], '#595857',
+    ['==', ['get', 'event'], 'Special Marine Warning'], '#b3faff',
     ['==', ['get', 'event'], 'Test Message'], '#3f3f3f',
     '#ffffff'
 ]

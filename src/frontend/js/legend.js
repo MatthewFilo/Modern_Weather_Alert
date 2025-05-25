@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             { color: "#bdad7e", label: "Fire Weather Watch"},
             { color: "#ebd9a4", label: "Special Weather Statement"},
             { color: "#595857", label: "Air Quality Alert"},
+            { color: "#b3faff", label: "Special Marine Warning"},
             { color: "#3f3f3f", label: "Test Message"}
     ]
 

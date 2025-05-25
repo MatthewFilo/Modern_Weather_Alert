@@ -6,15 +6,15 @@ const redis = new Redis(redisURL);
 
 async function fetchAlerts() {
     // Check and see for currently cached alerts
-    // try {
-    //     const cached = await redis.get('alerts_geojson');
-    //     if (cached) {
-    //         return JSON.parse(cached);
-    //     }
-    // } 
-    // catch ( error ) {
-    //     console.error('Redis cache error:', error);
-    // }
+    try {
+        const cached = await redis.get('alerts_geojson');
+        if (cached) {
+            return JSON.parse(cached);
+        }
+    } 
+    catch ( error ) {
+        console.error('Redis cache error:', error);
+    }
 
     // Call the API and filter the alerts (AlertZones, features, old alerts etc.)
     try {

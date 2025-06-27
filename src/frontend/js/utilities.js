@@ -50,8 +50,13 @@ const warningColors = [
     ['==', ['get', 'event'], 'Air Quality Alert'], '#595857',
     ['==', ['get', 'event'], 'Special Marine Warning'], '#b3faff',
     ['==', ['get', 'event'], 'Hazardous Seas Warning'], '#00686f',
+    ['==', ['get', 'event'], 'Heat Advisory'], '#ffc34b',
+    ['==', ['get', 'event'], 'Extreme Heat Watch'], '#f47505',
+    ['==', ['get', 'event'], 'Extreme Heat Warning'], '#aa5001',
+    ['==', ['get', 'event'], 'Excessive Heat Watch'], '#f47505', 
+    ['==', ['get', 'event'], 'Excessive Heat Warning'], '#aa5001',
     ['==', ['get', 'event'], 'Test Message'], '#3f3f3f',
-    '#ffffff'
+    '#535353'
 ]
 
 export { translateTime, warningColors }

@@ -35,6 +35,9 @@ document.addEventListener('DOMContentLoaded', function() {
             { color: "#595857", label: "Air Quality Alert"},
             { color: "#b3faff", label: "Special Marine Warning"},
             { color: "#00686f", label: "Hazardous Seas Warning"},
+            { color: "#ffc34b", label: "Heat Advisory"},
+            { color: "#f47505", label: "Extreme/Excessive Heat Watch"},
+            { color: "#aa5001", label: "Extreme/Excessive Heat Warning"},
             { color: "#3f3f3f", label: "Test Message"}
     ]
 

@@ -12,6 +12,17 @@ fetchAlerts()
     console.error('Couldnt pre-warm alerts cache:', error);
   });
 
+// Pre-warm the cache every 3 minutes in the background
+setInterval(() => {
+  fetchAlerts()
+    .then(() => {
+      console.log(`[${new Date().toLocaleString()}] Alerts cache refreshed in background`);
+    })
+    .catch( error => {
+      console.error(`[${new Date().toLocaleString()}] Error refreshing alerts cache:`, error);
+    });
+}, 180000);
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

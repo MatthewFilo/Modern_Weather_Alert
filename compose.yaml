@@ -12,20 +12,19 @@ services:
     image: redis:7
     container_name: redis
     restart: unless-stopped
-    environment:
-      - REDIS_URL={REDIS_URL}
     ports:
       - "6379:6379"
+
   hqe-app:
     build: .
     image: hqe-app
     container_name: hqe-app
     restart: unless-stopped
     ports:
-      - "80:8080"
+      - "8080:8080"
     environment:
       - NODE_ENV=production
-      - REDIS_URL=${REDIS_URL}
-      - SERVER_PORT=${SERVER_PORT}
+      - REDIS_URL=redis://redis:6379  # Hardcode for Docker Compose
+      - SERVER_PORT=8080
     depends_on:
       - redis
